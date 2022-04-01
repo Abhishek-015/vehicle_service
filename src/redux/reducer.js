@@ -8,9 +8,9 @@ let initialState = {
 export const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case LOGGED_IN_USER:
-      return {...state,allData:[...state.allData,payload]};
+      return {...state,userDetails:payload};
     case LOGOUT:
-      return {...state,allData:payload};
+      return {...state,userDetails:payload};
     // case EDIT_TODO:
     //   return {...state,allData:payload};
     // case TOGGLE_STATUS:

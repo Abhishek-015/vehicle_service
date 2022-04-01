@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { auth, googleAuthProvider } from "../../firebase/firebase";
 import { LOGGED_IN_USER } from "../../redux/actionTypes";
 import "./signin.css";
@@ -16,6 +15,7 @@ export const SignIn = () => {
     navigate("/");
   };
 
+  //google auth signin
   const googleLogin = async () => {
     setShow(false);
     auth
@@ -24,20 +24,21 @@ export const SignIn = () => {
         const { user } = result;
         const { token, claims } = await user.getIdTokenResult();
         const { name, picture } = claims;
+        const payload = {
+          email: user.email,
+          role:
+            user.email === process.env.REACT_APP_ADMIN ? "admin" : "subscriber",
+          name,
+          picture,
+          token,
+        };
+
+        //store auth data to redux store
         dispatch({
           type: LOGGED_IN_USER,
-          payload: {
-            email: user.email,
-            role:
-              user.email === process.env.REACT_APP_ADMIN
-                ? "admin"
-                : "subscriber",
-            name,
-            picture,
-            token,
-          },
+          payload,
         });
-        navigate("/loggedIn");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err.message);
@@ -47,9 +48,6 @@ export const SignIn = () => {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

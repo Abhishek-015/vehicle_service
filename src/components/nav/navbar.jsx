@@ -1,5 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import { useSelector, useDispatch } from "react-redux";
+
 import {
   LoginOutlined,
   SettingOutlined,
@@ -7,13 +10,34 @@ import {
   ShopOutlined,
   SearchOutlined,
   HomeOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 
+import { LOGOUT } from "../../redux/actionTypes";
+
 const Navbar = () => {
+  const user = useSelector((state) => state.userDetails);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //logout
+  const handleLogout = () => {
+    firebase.auth().signOut();
+    dispatch({
+      type: LOGOUT,
+      payload: null,
+    });
+    navigate("/");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <Link className="navbar-brand" to="/">
-        Navbar
+        <img
+          style={{ height: "50px", width: "50px" }}
+          src="https://cdn-icons-png.flaticon.com/512/6887/6887043.png"
+          alt=""
+        />
       </Link>
       <button
         className="navbar-toggler"
@@ -31,7 +55,7 @@ const Navbar = () => {
         <ul className="navbar-nav mr-auto">
           <li className="nav-item ">
             <Link className="nav-link" to="/">
-              <span >
+              <span>
                 {" "}
                 <HomeOutlined className="text-warning p-1" />
                 Home
@@ -67,18 +91,37 @@ const Navbar = () => {
         <div>
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
-                <SettingOutlined className="text-warning p-1" />
-                Dashboard
-              </Link>
+              {user && user.token ? (
+                user.role === "admin" ? (
+                  <Link className="nav-link" to="/admin/dashboard">
+                    <SettingOutlined className="text-warning p-1" />
+                    Admin Dashboard
+                  </Link>
+                ) : (
+                  <Link className="nav-link" to="/user/dashboard">
+                    <SettingOutlined className="text-warning p-1" />
+                    User Dashboard
+                  </Link>
+                )
+              ) : null}
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                <span>
-                  <LoginOutlined className="text-warning p-1" />
-                  Login
-                </span>
-              </Link>
+              {user && user.token ? (
+                <Link className="nav-link" to="/">
+                  <span onClick={handleLogout}>
+                    <LogoutOutlined className="text-warning p-1" />
+                    Logout
+                  </span>
+                </Link>
+              ) : (
+                <Link className="nav-link" to="/login">
+                  {" "}
+                  <span>
+                    <LoginOutlined className="text-warning p-1" />
+                    Login
+                  </span>
+                </Link>
+              )}
             </li>
           </ul>
         </div>
