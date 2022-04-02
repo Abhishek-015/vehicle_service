@@ -19,6 +19,8 @@ const initialData = {
   radius: "",
   rating: "",
   desc: "",
+  price: "",
+  discount: "",
   ImageUrl: "",
   location: "",
   onlinePayment: "",
@@ -35,6 +37,8 @@ const CreateServiceForm = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
     for (let el of Object.values(initial)) {
       if (el === "") {
         toast.error("fill the required fields");
@@ -59,13 +63,11 @@ const CreateServiceForm = () => {
           console.log(err);
           toast.error(err.message);
         });
-    setInitial(initialData);
   };
 
   return (
     <form type="submit">
       <div className="form-group">
-        {JSON.stringify(initial)}
         <br />
         <label>Service Name</label>
         <input
@@ -89,6 +91,32 @@ const CreateServiceForm = () => {
           id="exampleFormControlInput1"
           placeholder="Radius"
           value={initial.radius}
+          required
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label>Service Charge</label>
+        <input
+          name="price"
+          type="Number"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="price"
+          value={initial.price}
+          required
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label>Percentage Discount</label>
+        <input
+          name="discount"
+          type="Number"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="discount"
+          value={initial.discount}
           required
           onChange={handleChange}
         />

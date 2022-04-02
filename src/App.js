@@ -1,4 +1,5 @@
 import "./App.css";
+import 'antd/dist/antd.css';
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";

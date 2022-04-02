@@ -8,8 +8,49 @@
       "ImageUrl": "https://www.indusmotor.com/public/uploads/pages/179020210129170225.jpg",
       "location": "Chennai",
       "onlinePayment": "Yes",
+      "discount":"20",
+      "price":"789",
       "ObjectId": "8218a10b-d5b0-495c-8897-91470b0d4a6f",
       "id": 1
+    },
+    {
+      "serviceName": "SR Motors Services",
+      "radius": "56",
+      "rating": "4",
+      "desc": "ghdgah djahsbdj bdasjk jhdasjk",
+      "ImageUrl": "https://mycarneedsa.com/assets/uploads/images/blog/ced432343064c76d4aed1265b562858c.png",
+      "location": "Banglore",
+      "onlinePayment": "Yes",
+      "discount":"25",
+      "price":"1099",
+      "ObjectId": "3a979256-7166-4ddc-8158-2dff063c769e",
+      "id": 2
+    },
+    {
+      "serviceName": "hjadsbjdb",
+      "radius": "789",
+      "rating": "5",
+      "desc": "gfh ghjghj hbhj",
+      "ImageUrl": "https://mycarneedsa.com/assets/uploads/images/blog/ced432343064c76d4aed1265b562858c.png",
+      "location": "Banglore",
+      "onlinePayment": "Yes",
+      "discount":"20",
+      "price":"849",
+      "ObjectId": "961a4ff9-2f0b-4802-9bba-9b2acc6a598a",
+      "id": 3
+    },
+    {
+      "serviceName": "hdjsahj dasjkdhkja",
+      "radius": "45",
+      "rating": "4",
+      "desc": "ghdgasj dsajkhdkj",
+      "ImageUrl": "https://mycarneedsa.com/assets/uploads/images/blog/ced432343064c76d4aed1265b562858c.png",
+      "location": "Banglore",
+      "onlinePayment": "No",
+      "discount":"10",
+      "price":"711",
+      "ObjectId": "053df8fb-0d2b-41fb-9441-8a40a3a7ca58",
+      "id": 4
     }
   ]
 }

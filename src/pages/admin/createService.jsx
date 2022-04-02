@@ -10,7 +10,7 @@ const CreateService = () => {
           <AdminNavbar />
         </div>
         <div className="col-md-10">
-          <h4 className="mb-4">Create Service</h4>
+          <h4>Create Service</h4>
           <CreateServiceForm />
         </div>
       </div>

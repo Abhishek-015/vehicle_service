@@ -3,6 +3,11 @@ import axios from "axios";
 export const getServices = async () =>
   await axios.get(`${process.env.REACT_APP_API}`);
 
+export const getServicesByCount = async (page) =>
+  await axios.get(`${process.env.REACT_APP_API}?_page=${page}&_limit=3`);
+
+
+
 export const createService = async (paylaod) => {
   await axios.post(`${process.env.REACT_APP_API}`, { ...paylaod });
 };
