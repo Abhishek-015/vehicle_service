@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
+import { createService, getServices } from "../../utils/serviceRoute";
 
 const city = [
   "Kanpur",
@@ -12,15 +15,17 @@ const city = [
 ];
 
 const initialData = {
-  "service-name": "",
+  serviceName: "",
   radius: "",
   rating: "",
   desc: "",
   ImageUrl: "",
   location: "",
+  onlinePayment: "",
 };
 
 const CreateServiceForm = () => {
+  const user = useSelector((state) => state.userDetails);
   const [initial, setInitial] = useState(initialData);
 
   const handleChange = (e) => {
@@ -30,14 +35,31 @@ const CreateServiceForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const payload = {
-        ...initial,
-        ObjectId:uuidv4()
+    for (let el of Object.values(initial)) {
+      if (el === "") {
+        toast.error("fill the required fields");
+        return;
+      }
     }
+    const payload = {
+      ...initial,
+      ObjectId: uuidv4(),
+    };
 
     console.log(payload);
-    setInitial(initialData)
+    //post the service to server
+    user &&
+      user.token &&
+      user.role === "admin" &&
+      createService(payload)
+        .then((res) => {
+          toast.success("service created successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.message);
+        });
+    setInitial(initialData);
   };
 
   return (
@@ -45,59 +67,68 @@ const CreateServiceForm = () => {
       <div className="form-group">
         {JSON.stringify(initial)}
         <br />
-        <label for="exampleFormControlInput1">Service Name</label>
+        <label>Service Name</label>
         <input
-          name="service-name"
+          name="serviceName"
           type="text"
           className="form-control "
           id="exampleFormControlInput1"
           placeholder="Service Name"
+          value={initial.serviceName}
           autoFocus
           onChange={handleChange}
+          required
         />
       </div>
       <div className="form-group">
-        <label for="exampleFormControlInput1">Radius</label>
+        <label>Radius</label>
         <input
           name="radius"
           type="Number"
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="Radius"
+          value={initial.radius}
+          required
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label for="exampleFormControlInput1">Image Url</label>
+        <label>Image Url</label>
         <input
           name="ImageUrl"
           type="url"
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="Enter Image Url"
+          value={initial.ImageUrl}
+          required
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label for="exampleFormControlInput1">Description</label>
+        <label>Description</label>
         <input
           name="desc"
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="Add description"
+          value={initial.desc}
+          required
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label for="exampleFormControlSelect1">Rating</label>
+        <label>Rating</label>
         <select
           name="rating"
           className="form-control bg-secondary text-white"
           id="exampleFormControlSelect1"
+          required
           onChange={handleChange}
         >
-          <option selected disabled hidden>
+          <option value="select Rating" selected disabled hidden>
             select Rating
           </option>
           <option value="1">1</option>
@@ -108,31 +139,32 @@ const CreateServiceForm = () => {
         </select>
       </div>
       <div className="form-group">
-        <label for="exampleFormControlSelect1">City</label>
+        <label>City</label>
         <select
           name="location"
           className="form-control bg-secondary text-white"
           id="exampleFormControlSelect1"
+          required
           onChange={handleChange}
         >
           <option selected disabled hidden>
             select location
           </option>
           {city.map((el) => (
-            <option>{el}</option>
+            <option key={el}>{el}</option>
           ))}
         </select>
       </div>
       <div className="form-group">
-        <label for="exampleFormControlInput1">Online Payment</label>
+        <label>Online Payment</label>
         <select
-          name="online-payment"
+          name="onlinePayment"
           className="form-control bg-secondary text-white"
           id="exampleFormControlSelect1"
           onChange={handleChange}
         >
           <option selected disabled hidden>
-            Online Payment
+            Online Payment Available
           </option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
@@ -140,7 +172,7 @@ const CreateServiceForm = () => {
       </div>
       <button
         type="submit"
-        class="btn btn-primary btn-sm"
+        className="btn btn-primary btn-sm"
         onClick={handleSubmit}
       >
         Create

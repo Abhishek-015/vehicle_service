@@ -1,6 +1,6 @@
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { auth } from "./firebase/firebase";
 import { LOGGED_IN_USER } from "./redux/actionTypes";
@@ -15,10 +15,16 @@ import AdminDashboard from "./pages/admin/dashboard";
 import CreateService from "./pages/admin/createService";
 import CreateCoupon from "./pages/admin/coupon";
 
+import { ToastContainer } from "react-toastify";
+import { getServices } from "./utils/serviceRoute";
+import { addServiceData } from "./redux/action";
+
 function App() {
+  const services = useSelector((state) => state.serviceData);
   const dispatch = useDispatch();
   useEffect(() => {
     authentication();
+    getServiceData();
   }, []);
   const authentication = async () => {
     const userAuth = auth.onAuthStateChanged(async (user) => {
@@ -33,8 +39,6 @@ function App() {
           picture,
           token,
         };
-
-
         dispatch({
           type: LOGGED_IN_USER,
           payload,
@@ -43,10 +47,20 @@ function App() {
     });
     return () => userAuth();
   };
+
+  const getServiceData = () => {
+    getServices()
+      .then(({data}) => {
+        console.log(data);
+        dispatch(addServiceData(data))
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       <div>
         <Navbar />
+        <ToastContainer />
         <Routes>
           <Route path="/login" element={<SignIn />}></Route>
           <Route path="/" element={<Home />}></Route>

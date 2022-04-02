@@ -1,7 +1,7 @@
-import {LOGGED_IN_USER,LOGOUT } from "./actionTypes";
+import {LOGGED_IN_USER,LOGOUT, SERVICE_DATA } from "./actionTypes";
 
 let initialState = {
-  allData:[],
+  serviceData:[],
   userDetails:{}
 };
 
@@ -11,8 +11,8 @@ export const reducer = (state = initialState, { type, payload }) => {
       return {...state,userDetails:payload};
     case LOGOUT:
       return {...state,userDetails:payload};
-    // case EDIT_TODO:
-    //   return {...state,allData:payload};
+    case SERVICE_DATA:
+      return {...state,serviceData:payload};
     // case TOGGLE_STATUS:
     //   return {...state,allData:payload};
     default:

@@ -1,19 +1,15 @@
 {
-  "posts": [
+  "vehicle-service-data": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "serviceName": "hagdsj",
+      "radius": "75",
+      "rating": "5",
+      "desc": "hxahsvhx",
+      "ImageUrl": "https://www.indusmotor.com/public/uploads/pages/179020210129170225.jpg",
+      "location": "Chennai",
+      "onlinePayment": "Yes",
+      "ObjectId": "8218a10b-d5b0-495c-8897-91470b0d4a6f",
+      "id": 1
     }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
