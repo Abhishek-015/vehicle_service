@@ -2,22 +2,28 @@ import React, { useEffect, useState } from "react";
 import { Menu, Slider, Checkbox } from "antd";
 import {
   DollarOutlined,
-  DownSquareOutlined,
   StarOutlined,
   TransactionOutlined,
+  VerticalAlignBottomOutlined,
+  AccountBookOutlined,
 } from "@ant-design/icons";
 
-import AdminNavbar from "../components/nav/adminNav";
-import Star from "../components/stars/Stars";
 import { getServices } from "../utils/serviceRoute";
 import ServiceCard from "../components/cards/serviceCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ServicePageLocationSelect from "../components/forms/servicePageLocationSelect";
+import { FILTER_SERVICES_BY_LOCATION } from "../redux/actionTypes";
 const { SubMenu } = Menu;
 
 const Services = () => {
   const serviceData = useSelector((state) => state.serviceData);
-  const [radius, setRadius] = useState(0);
+  const filterServicesByLocation = useSelector(
+    (state) => state.filterServicesByLocation
+  );
+  const searchQuery = useSelector((state) => state.searchQuery);
+  const dispatch = useDispatch();
   const [services, setServices] = useState([]);
+  const [radius, setRadius] = useState(0);
   const [onlinePay, setOnlinePay] = useState("");
   const [rating, setRating] = useState("");
   const [price, setPrice] = useState("");
@@ -25,12 +31,29 @@ const Services = () => {
 
   useEffect(() => {
     getAllServices();
-  }, []);
+  }, [searchQuery]);
 
   const getAllServices = () => {
-    getServices().then((res) => {
-      console.log(res.data);
-      setServices(res.data);
+    setOnlinePay("");
+    setRating("");
+    setDiscount("");
+    setPrice("");
+    setRadius("");
+    getServices().then(({ data }) => {
+      if (searchQuery != "") {
+        const filterDataBysearchquery = [...data].filter(
+          (service) => service.location === searchQuery
+        );
+
+        dispatch({
+          type: FILTER_SERVICES_BY_LOCATION,
+          payload: filterDataBysearchquery,
+        });
+
+        setServices(filterDataBysearchquery);
+      } else {
+        setServices(data);
+      }
     });
   };
 
@@ -38,12 +61,12 @@ const Services = () => {
   const handleSlider = (value) => {
     setOnlinePay("");
     setRating("");
-    setDiscount("")
-    setPrice("")
+    setDiscount("");
+    setPrice("");
     setRadius(value);
-    const filterServices = [...serviceData].filter(
-      (service) => Number(service.radius) <= value
-    );
+    const filterServices = (
+      searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+    ).filter((service) => Number(service.radius) <= value);
     setServices(filterServices);
   };
 
@@ -73,36 +96,31 @@ const Services = () => {
   const handleOnlinePay = (e) => {
     setRadius(0);
     setRating("");
-    setDiscount("")
-    setPrice("")
+    setDiscount("");
+    setPrice("");
     setOnlinePay(e.target.value);
-    const filterServices = [...serviceData].filter(
-      (service) => service.onlinePayment === e.target.value
-    );
+    const filterServices = (
+      searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+    ).filter((service) => service.onlinePayment === e.target.value);
     setServices(filterServices);
   };
 
   // 5. show services by star ratings
   const handleStarRating = (e) => {
-    // e.preventDefault();
-    // dispatch({
-    //   type: "SEARCH_QUERY",
-    //   payload: { text: "" },
-    // });
     setRadius(0);
     setOnlinePay("");
-    setDiscount("")
-    setPrice("")
+    setDiscount("");
+    setPrice("");
     setRating(e.target.value);
     if (e.target.value === "desc") {
-      const filterServices = [...serviceData].sort(
-        (a, b) => Number(b.rating) - Number(a.rating)
-      );
+      const filterServices = (
+        searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+      ).sort((a, b) => Number(b.rating) - Number(a.rating));
       setServices(filterServices);
     } else if (e.target.value === "asc") {
-      const filterServices = [...serviceData].sort(
-        (a, b) => Number(a.rating) - Number(b.rating)
-      );
+      const filterServices = (
+        searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+      ).sort((a, b) => Number(a.rating) - Number(b.rating));
       setServices(filterServices);
     }
   };
@@ -132,25 +150,20 @@ const Services = () => {
 
   // show services by price
   const handlePrice = (e) => {
-    // e.preventDefault();
-    // dispatch({
-    //   type: "SEARCH_QUERY",
-    //   payload: { text: "" },
-    // });
     setRadius(0);
     setOnlinePay("");
     setRating("");
-    setDiscount("")
-    setPrice(e.target.value)
+    setDiscount("");
+    setPrice(e.target.value);
     if (e.target.value === "desc") {
-      const filterServices = [...serviceData].sort(
-        (a, b) => Number(b.price) - Number(a.price)
-      );
+      const filterServices = (
+        searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+      ).sort((a, b) => Number(b.price) - Number(a.price));
       setServices(filterServices);
     } else if (e.target.value === "asc") {
-      const filterServices = [...serviceData].sort(
-        (a, b) => Number(a.price) - Number(b.price)
-      );
+      const filterServices = (
+        searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+      ).sort((a, b) => Number(a.price) - Number(b.price));
       setServices(filterServices);
     }
   };
@@ -177,27 +190,23 @@ const Services = () => {
       </>
     );
   };
+
   // 5. show services by discount
   const handleDiscount = (e) => {
-    // e.preventDefault();
-    // dispatch({
-    //   type: "SEARCH_QUERY",
-    //   payload: { text: "" },
-    // });
     setRadius(0);
     setOnlinePay("");
     setRating("");
     setPrice("");
     setDiscount(e.target.value);
     if (e.target.value === "desc") {
-      const filterServices = [...serviceData].sort(
-        (a, b) => Number(b.discount) - Number(a.discount)
-      );
+      const filterServices = (
+        searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+      ).sort((a, b) => Number(b.discount) - Number(a.discount));
       setServices(filterServices);
     } else if (e.target.value === "asc") {
-      const filterServices = [...serviceData].sort(
-        (a, b) => Number(a.discount) - Number(b.discount)
-      );
+      const filterServices = (
+        searchQuery !== "" ? [...filterServicesByLocation] : [...serviceData]
+      ).sort((a, b) => Number(a.discount) - Number(b.discount));
       setServices(filterServices);
     }
   };
@@ -231,10 +240,7 @@ const Services = () => {
         <div className="col-md-3">
           <h4 className="m-3">Filters</h4>
           <hr />
-          <Menu
-            defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
-            mode="inline"
-          >
+          <Menu defaultOpenKeys={["1", "2", "3", "4", "5"]} mode="inline">
             {/* for Radius */}
             <SubMenu
               key="1"
@@ -256,7 +262,7 @@ const Services = () => {
             </SubMenu>
             {/* star */}
             <SubMenu
-              key="3"
+              key="2"
               title={
                 <span className="h6 text-danger ">
                   <StarOutlined /> Rating
@@ -281,7 +287,7 @@ const Services = () => {
               key="3"
               title={
                 <span className="h6 text-danger">
-                  <StarOutlined /> Price
+                  <DollarOutlined /> Price
                 </span>
               }
             >
@@ -300,10 +306,10 @@ const Services = () => {
             </SubMenu>
             {/* Discount */}
             <SubMenu
-              key="3"
+              key="4"
               title={
                 <span className="h6 text-danger">
-                  <StarOutlined /> Discount
+                  <VerticalAlignBottomOutlined /> Discount
                 </span>
               }
             >
@@ -323,10 +329,10 @@ const Services = () => {
 
             {/* Online Payment */}
             <SubMenu
-              key="7"
+              key="5"
               title={
                 <span className="h6 text-danger">
-                  <DownSquareOutlined />
+                  <AccountBookOutlined />
                   Online Payment
                 </span>
               }
@@ -348,12 +354,19 @@ const Services = () => {
         </div>
         <div className="col-md-9">
           <h4 className="m-2">All Services</h4>
+          <div className="container my-3">
+            <ServicePageLocationSelect />
+          </div>
           <div className="row">
-            {services.map((service) => (
-              <div className="col-md-4" key={service.ObjectId}>
-                <ServiceCard service={service} />
-              </div>
-            ))}
+            {services.length === 0 ? (
+              <h5>No service available</h5>
+            ) : (
+              services.map((service) => (
+                <div className="col-md-4" key={service.ObjectId}>
+                  <ServiceCard service={service} />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -1,20 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import StarRatings from "react-star-ratings";
 import { useSelector } from "react-redux";
+import { Tooltip } from "antd";
 
 const ServiceCard = ({ service, handleServiceDelete, handleServiceEdit }) => {
   const user = useSelector((state) => state.userDetails);
+  const searchQuery = useSelector((state) => state.searchQuery);
   return (
-    <div className="card" style={{ width: "18rem",marginBottom:"5px" }}>
+    <div className="card mb-3" style={{ width: "18rem" }}>
       <img
         src={service.ImageUrl}
         alt="cap"
         style={{ height: "150px", width: "100%" }}
       />
-      <div className="card-body">
-        <h5 className="card-title ">{service.serviceName}</h5>
+      <div className="card-body my-0 pb-0">
+        <h5 className="card-title mb-0 ">{service.serviceName}</h5>
         <span>
           <StarRatings
             numberOfStars={5}
@@ -26,13 +28,13 @@ const ServiceCard = ({ service, handleServiceDelete, handleServiceEdit }) => {
           ({service.rating})
         </span>
         <br />
-        <p className="card-text mt-2">{service.desc}</p>
+        <p className="card-text mt-1 ">{service.desc}</p>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <p className="card-text mt-1">
+          <p className="card-text ">
             Service Charge :{" "}
             <span className="text-danger">₹{service.price}</span>
           </p>
-          <p className="card-text mt-1">
+          <p className="card-text">
             Discount : <span className="text-danger">{service.discount}%</span>
           </p>
         </div>
@@ -46,29 +48,53 @@ const ServiceCard = ({ service, handleServiceDelete, handleServiceEdit }) => {
 
       {user && user.token && user.role === "admin" && (
         <div
-          className="card-body"
-          style={{ display: "flex", justifyContent: "space-between" }}
+          className="card-body m-0 p-0"
+          style={{ display: "flex", justifyContent: "space-around" }}
         >
           <button
             onClick={() => handleServiceEdit(service.id)}
-            className="btn bg-transparent text-primary "
+            className="btn bg-transparent text-primary my-0 "
           >
             <span>
-              <EditOutlined className="m-1 text-danger" />
+              <EditOutlined className="mx-1 text-danger" />
               Edit
             </span>
           </button>
           <button
             onClick={() => handleServiceDelete(service.id)}
-            className="btn bg-transparent text-primary "
+            className="btn bg-transparent text-primary my-0  "
           >
             <span>
-              <DeleteOutlined className="m-1 text-danger" />
+              <DeleteOutlined className="mx-1 text-danger" />
               Delete
             </span>
           </button>
         </div>
       )}
+      <hr />
+      <div className="card-body text-center m-0 pt-0 ">
+        <Tooltip
+          title={
+            searchQuery === ""
+              ? "please select location"
+              : "Click to View Service"
+          }
+        >
+          <Link
+            to={`/service/${service.id}`}
+            className={
+              searchQuery === ""
+                ? "btn btn-primary disabled"
+                : "btn btn-primary"
+            }
+          >
+            <span>
+              <EyeOutlined className="mx-1 text-warning" />
+              View service
+            </span>
+          </Link>
+        </Tooltip>
+      </div>
     </div>
   );
 };

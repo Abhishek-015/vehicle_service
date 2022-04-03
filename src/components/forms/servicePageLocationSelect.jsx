@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SEARCH_QUERY } from "../../redux/actionTypes";
 
@@ -13,13 +13,14 @@ const city = [
   "Delhi",
 ];
 
-const SelectLocation = () => {
+const ServicePageLocationSelect = () => {
+  const searchQuery = useSelector((state) => state.searchQuery);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
+    console.log(e.target.value)
     dispatch({
       type: SEARCH_QUERY,
       payload: e.target.value,
@@ -36,9 +37,10 @@ const SelectLocation = () => {
           id="exampleFormControlSelect1"
           required
           onChange={handleChange}
+          //   defaultValue={searchQuery !== "" && searchQuery}
         >
           <option value="select Rating" selected disabled hidden>
-            Select your location...
+            {searchQuery != "" ? searchQuery : "Select your location..."}
           </option>
           {city.map((el) => (
             <option key={el}>{el}</option>
@@ -49,4 +51,4 @@ const SelectLocation = () => {
   );
 };
 
-export default SelectLocation;
+export default ServicePageLocationSelect;
