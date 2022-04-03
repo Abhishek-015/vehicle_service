@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "react-toastify";
 import RelatedServices from "../components/serviceView/relatedServices";
-import { SERVICE_VIEW } from "../redux/actionTypes";
+import { SEARCH_QUERY, SERVICE_VIEW, USER_CART } from "../redux/actionTypes";
 
 import { getServiceById } from "../utils/serviceRoute";
 
@@ -24,24 +24,41 @@ const ServiceView = () => {
   }, [id]);
 
   const handleService = (serviceToUserCart) => {
+
     //checking id userCart already exist
     if (localStorage.getItem("userCart")) {
-      console.log("lovcal aghg");
+        
       const userCart = JSON.parse(localStorage.getItem("userCart"));
       for (let el of userCart) {
         // checking if service already exist then notify user else add service to local storage
         if (el.id === serviceToUserCart.id) {
           toast.error("Current service already added to cart");
           return;
-        } else {
-          const cartSrvices = JSON.parse(localStorage.getItem("userCart"));
-          const newCart = [...cartSrvices, serviceToUserCart];
-          localStorage.setItem("userCart", JSON.stringify(newCart));
-          toast.success("service added to cart");
         }
       }
-    } else {
+      const cartSrvices = JSON.parse(localStorage.getItem("userCart"));
+      const newCart = [...cartSrvices, serviceToUserCart];
+
+      //store data to redux
+      dispatch({
+        type: USER_CART,
+        payload: newCart,
+      });
+
+      //store data to local storage
+      localStorage.setItem("userCart", JSON.stringify(newCart));
+      toast.success("service added to cart");
+
+    } else if (!localStorage.getItem("userCart")) {
       const serviceArray = [serviceToUserCart];
+
+      //store data to redux
+      dispatch({
+        type: USER_CART,
+        payload: serviceArray,
+      });
+
+      //store data to local storage
       localStorage.setItem("userCart", JSON.stringify(serviceArray));
       toast.success("service added to cart");
     }
@@ -98,12 +115,21 @@ const ServiceView = () => {
             <span className="text-danger">{serviceView.onlinePayment}</span>
           </p>
           <hr />
+          <div className="flex">
+
           <button
-            className="btn btn-primary btn-sm"
+            className="btn btn-primary btn-sm m-1"
             onClick={() => handleService(serviceView)}
           >
             Add service to Cart
           </button>
+          <button
+            className="btn btn-primary btn-sm m-1"
+            onClick={() => handleService(serviceView)}
+          >
+            Go to Cart
+          </button>
+          </div>
         </div>
       </div>
 

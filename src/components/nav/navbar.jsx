@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import { useSelector, useDispatch } from "react-redux";
+import { Badge } from "antd";
 
 import {
   LoginOutlined,
@@ -17,6 +18,7 @@ import { LOGOUT } from "../../redux/actionTypes";
 
 const Navbar = () => {
   const user = useSelector((state) => state.userDetails);
+  const userCart = useSelector((state) => state.userCart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -70,13 +72,18 @@ const Navbar = () => {
               </span>
             </Link>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/cart">
-              <span>
-                <ShoppingCartOutlined className="text-warning p-1" />
-                Cart
-              </span>
-            </Link>
+          <li className="nav-item pt-1">
+            <Badge
+              count={userCart.length}
+              size={"small"}
+            >
+              <Link className="nav-link" to="/cart">
+                <span>
+                  <ShoppingCartOutlined className="text-warning p-1" />
+                  Cart
+                </span>
+              </Link>
+            </Badge>
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">

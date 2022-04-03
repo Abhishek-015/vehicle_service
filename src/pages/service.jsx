@@ -31,6 +31,7 @@ const Services = () => {
 
   useEffect(() => {
     getAllServices();
+    localStorage.setItem("searchQuery",searchQuery)
   }, [searchQuery]);
 
   const getAllServices = () => {

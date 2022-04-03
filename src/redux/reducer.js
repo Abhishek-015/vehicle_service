@@ -5,6 +5,7 @@ import {
   SEARCH_QUERY,
   FILTER_SERVICES_BY_LOCATION,
   SERVICE_VIEW,
+  USER_CART
 } from "./actionTypes";
 
 let initialState = {
@@ -13,6 +14,7 @@ let initialState = {
   userDetails: {},
   serviceView: {},
   searchQuery: "",
+  userCart:[]
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -29,6 +31,8 @@ export const reducer = (state = initialState, { type, payload }) => {
       return { ...state, filterServicesByLocation: payload };
     case SERVICE_VIEW:
       return { ...state, serviceView: payload };
+    case USER_CART:
+      return { ...state, userCart: payload };
     default:
       return state;
   }

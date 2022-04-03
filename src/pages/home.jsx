@@ -12,7 +12,6 @@ const Home = () => {
       type: SEARCH_QUERY,
       payload: "",
     });
-    // localStorage.removeItem("service_view")
   });
   return (
     <>
