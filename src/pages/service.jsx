@@ -12,7 +12,7 @@ import { getServices } from "../utils/serviceRoute";
 import ServiceCard from "../components/cards/serviceCard";
 import { useDispatch, useSelector } from "react-redux";
 import ServicePageLocationSelect from "../components/forms/servicePageLocationSelect";
-import { FILTER_SERVICES_BY_LOCATION } from "../redux/actionTypes";
+import { FILTER_SERVICES_BY_LOCATION, SEARCH_QUERY } from "../redux/actionTypes";
 const { SubMenu } = Menu;
 
 const Services = () => {

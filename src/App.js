@@ -1,5 +1,5 @@
 import "./App.css";
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -19,6 +19,7 @@ import CreateCoupon from "./pages/admin/coupon";
 import { ToastContainer } from "react-toastify";
 import { getServices } from "./utils/serviceRoute";
 import { addServiceData } from "./redux/action";
+import ServiceView from "./pages/serviceView";
 
 function App() {
   const services = useSelector((state) => state.serviceData);
@@ -51,9 +52,9 @@ function App() {
 
   const getServiceData = () => {
     getServices()
-      .then(({data}) => {
+      .then(({ data }) => {
         console.log(data);
-        dispatch(addServiceData(data))
+        dispatch(addServiceData(data));
       })
       .catch((err) => console.log(err));
   };
@@ -71,6 +72,7 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />}></Route>
           <Route path="/admin/service" element={<CreateService />}></Route>
           <Route path="/admin/coupon" element={<CreateCoupon />}></Route>
+          <Route path="/service/:id" element={<ServiceView />}></Route>
         </Routes>
       </div>
     </>

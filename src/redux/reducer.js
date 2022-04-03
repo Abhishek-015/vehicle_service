@@ -4,12 +4,14 @@ import {
   SERVICE_DATA,
   SEARCH_QUERY,
   FILTER_SERVICES_BY_LOCATION,
+  SERVICE_VIEW,
 } from "./actionTypes";
 
 let initialState = {
   serviceData: [],
   filterServicesByLocation: [],
   userDetails: {},
+  serviceView: {},
   searchQuery: "",
 };
 
@@ -25,6 +27,8 @@ export const reducer = (state = initialState, { type, payload }) => {
       return { ...state, searchQuery: payload };
     case FILTER_SERVICES_BY_LOCATION:
       return { ...state, filterServicesByLocation: payload };
+    case SERVICE_VIEW:
+      return { ...state, serviceView: payload };
     default:
       return state;
   }

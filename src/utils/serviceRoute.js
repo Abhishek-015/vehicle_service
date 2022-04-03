@@ -18,3 +18,9 @@ export const deleteService = async (serviceId) =>
 //   export const updateService = async (paylaod) => {
 //     await axios.post(`${process.env.REACT_APP_API}`, { ...paylaod });
 //   };
+
+export const getServiceById = async (serviceId) =>
+  await axios.get(`${process.env.REACT_APP_API}/${serviceId}`);
+
+export const getServicesByLocation = async (location) =>
+  await axios.get(`${process.env.REACT_APP_API}/?location=${location}`);

@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TypeWriterEffect from "../components/typewritter/typeWritterEffect";
 import SelectLocation from "../components/forms/locationSelectForn";
 import OurServices from "../components/homepage/ourServices";
+import { useDispatch } from "react-redux";
+import { SEARCH_QUERY } from "../redux/actionTypes";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: SEARCH_QUERY,
+      payload: "",
+    });
+    // localStorage.removeItem("service_view")
+  });
   return (
     <>
       <div className="jumbotron text-warning h2 font-weight-bold text-center mt-2 p-2">
