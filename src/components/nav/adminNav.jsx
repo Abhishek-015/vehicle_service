@@ -20,6 +20,11 @@ const AdminNavbar = () => {
           Coupon
         </Link>
       </li>
+      <li className="nav-item">
+        <Link to="/admin/adminOrders" className="nav-link">
+          Admin orders
+        </Link>
+      </li>
     </ul>
   </nav>
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "react-toastify";
 import RelatedServices from "../components/serviceView/relatedServices";
@@ -125,9 +125,11 @@ const ServiceView = () => {
           </button>
           <button
             className="btn btn-primary btn-sm m-1"
-            onClick={() => handleService(serviceView)}
+            // onClick={() => handleService(serviceView)}
           >
+            <Link to="/cart" className="text-white">
             Go to Cart
+            </Link>
           </button>
           </div>
         </div>

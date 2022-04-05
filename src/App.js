@@ -20,9 +20,10 @@ import { ToastContainer } from "react-toastify";
 import { getServices } from "./utils/serviceRoute";
 import { addServiceData } from "./redux/action";
 import ServiceView from "./pages/serviceView";
+import AdminOrders from "./pages/admin/adminOrders";
 
 function App() {
-  const services = useSelector((state) => state.serviceData);
+  // const services = useSelector((state) => state.serviceData);
   const dispatch = useDispatch();
   useEffect(() => {
     authentication();
@@ -53,7 +54,6 @@ function App() {
   const getServiceData = () => {
     getServices()
       .then(({ data }) => {
-        console.log(data);
         dispatch(addServiceData(data));
       })
       .catch((err) => console.log(err));
@@ -73,6 +73,7 @@ function App() {
           <Route path="/admin/service" element={<CreateService />}></Route>
           <Route path="/admin/coupon" element={<CreateCoupon />}></Route>
           <Route path="/service/:id" element={<ServiceView />}></Route>
+          <Route path="/admin/adminOrders" element={<AdminOrders />}></Route>
         </Routes>
       </div>
     </>
