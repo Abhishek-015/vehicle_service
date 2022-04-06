@@ -7,13 +7,17 @@ import { toast } from "react-toastify";
 import CartServices from "../components/cards/servicesCardInCheckout";
 import { USER_CART, USER_ORDERS } from "../redux/actionTypes";
 import { createOrder } from "../utils/userRoute";
+import EditCartService from "../components/cards/editServiceCardInCheckout";
 
 const Cart = () => {
   const cart = useSelector((state) => state.userCart);
   const user = useSelector((state) => state.userDetails);
-  const [userOrders, setUserOrders] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [serviceId, setServiceId] = useState(null);
+  const [dateTimePromo, setDateTimePromo] = useState({});
+
   useEffect(() => {
     if (localStorage.getItem("userCart")) {
       const localCart = JSON.parse(localStorage.getItem("userCart"));
@@ -24,21 +28,54 @@ const Cart = () => {
     }
   }, []);
 
-  //   const getTotal = () => {
-  //     return cart.reduce((currentValue, nextValue) => {
-  //       return currentValue + nextValue.count * nextValue.price;
-  //     }, 0);
-  //   };
+  const handleServiceId = (id) => setServiceId(id);
 
-  // const saveOrderToDb = () => {
-  //   // console.log("cart", JSON.stringify(cart, null, 4));
-  //   userCart(cart, user.token)
-  //     .then((res) => {
-  //       console.log("CART POST RES", res);
-  //       if (res.data.ok) history.push("/checkout");
-  //     })
-  //     .catch((err) => console.log("cart save error", err));
-  // };
+  const handleDateTimePromo = (e) => {
+    setDateTimePromo({ ...dateTimePromo, [e.target.name]: e.target.value });
+    console.log(dateTimePromo);
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+
+    const newCart = [...cart];
+
+    for (let i = 0; i < newCart.length; i++) {
+      if (newCart[i].id === serviceId) {
+        newCart[i] = { ...newCart[i], ...dateTimePromo };
+      }
+      if (newCart[i].promoCodeApplied) {
+        newCart[i].priceAfterDiscount = (
+          newCart[i].price -
+          (newCart[i].price * newCart[i].discount) / 100
+        ).toFixed(2);
+      }
+    }
+
+    console.log(newCart);
+
+    // store new Edited cart with date,time and promocode applied
+    dispatch({
+      type: USER_CART,
+      payload: newCart,
+    });
+    // toast.success(`${newEditData.name} is successfully updated`);
+    setDateTimePromo({});
+    setServiceId(null);
+  };
+
+  const getTotal = () => {
+    return [...cart].reduce((currentValue, nextValue) => {
+      return (
+        currentValue +
+        Number(
+          nextValue.priceAfterDiscount
+            ? nextValue.priceAfterDiscount
+            : nextValue.price
+        )
+      );
+    }, 0);
+  };
 
   const handleCashOrders = () => {
     //filter online payment services if any
@@ -48,10 +85,15 @@ const Cart = () => {
           "Please remove services with online payment availiability "
         );
         return;
+      } else if (!item.time || !item.date) {
+        toast.error("Time and Date must be scheduled for each service");
+        return;
       }
     }
+
     //creating user orders
     const userOrders = {
+      totalPrice: getTotal().toFixed(2),
       userOrders: cart,
       userEmail: user.email,
       orderOn: new Date(),
@@ -108,32 +150,41 @@ const Cart = () => {
   const showCartItems = () => {
     return (
       <>
-        <table className="table table-bordered">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">Service center</th>
-              <th scope="col">Service Charge</th>
-              <th scope="col">Radius</th>
-              <th scope="col">Location</th>
-              <th scope="col">Date</th>
-              <th scope="col">Time</th>
-              <th scope="col">Online Payment</th>
-              <th scope="col">Remove</th>
-              <th scope="col">Apply PromoCode</th>
-            </tr>
-          </thead>
-          {cart.map((service) => {
-            return (
-              <CartServices
-                key={service.id}
-                service={service}
-                userOrders={userOrders}
-                setUserOrders={setUserOrders}
-                handleRemove={handleRemove}
-              />
-            );
-          })}
-        </table>
+        <form>
+          <table className="table table-bordered">
+            <thead className="thead-light">
+              <tr>
+                <th scope="col">Service center</th>
+                <th scope="col">Service Charge</th>
+                <th scope="col">Radius</th>
+                <th scope="col">Location</th>
+                <th scope="col">Service Date</th>
+                <th scope="col">Service Time</th>
+                <th scope="col">Online Pay Avail.</th>
+                <th scope="col">Apply PromoCode</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            {cart.map((service) =>
+              service.id === serviceId ? (
+                <EditCartService
+                  key={service.id}
+                  service={service}
+                  handleRemove={handleRemove}
+                  handleDateTimePromo={handleDateTimePromo}
+                  handleSave={handleSave}
+                />
+              ) : (
+                <CartServices
+                  key={service.id}
+                  service={service}
+                  handleRemove={handleRemove}
+                  handleServiceId={handleServiceId}
+                />
+              )
+            )}
+          </table>
+        </form>
       </>
     );
   };
@@ -159,14 +210,31 @@ const Cart = () => {
           {cart.map((service, ind) => (
             <div key={ind}>
               <p>
-                {" "}
-                {service.serviceName} =
-                <span className="text-danger">₹{service.price}</span>
+                {service.priceAfterDiscount ? (
+                  <span className="table-success py-1">
+                    {service.serviceName} ={" "}
+                    <span
+                      className="text-secondary"
+                      style={{ textDecoration: "line-through" }}
+                    >
+                      ₹{service.price} ,
+                    </span>{" "}
+                    Price after Discount :
+                    <span className="text-danger h6">
+                      ₹{service.priceAfterDiscount}
+                    </span>
+                  </span>
+                ) : (
+                  <span>
+                    {service.serviceName}={" "}
+                    <span className="text-danger">₹{service.price}</span>
+                  </span>
+                )}
               </p>
             </div>
           ))}
           <hr />
-          {/* Total : <b>₹{getTotal()}</b> */}
+          Total Payable : <b>₹{getTotal().toFixed(2)}</b>
           <hr />
           {user ? (
             <>

@@ -8,9 +8,10 @@ const UserOrders = ({ orders }) => {
           <div className="table-secondary p-1 text-secondary">
             OrderId : {order.OrderId} / Order-Date : {order.date} / Order-Time :{" "}
             {order.time} / PaymentMode :{" "}
-            <span className="text-danger">{order.paymentMode}</span>{" "}
+            <span className="text-danger">{order.paymentMode}</span>{" "}/
+            <span>Total : <b className="text-danger">₹ {order.totalPrice}</b></span>
           </div>
-          <table className="table table-bordered table-sm table-hover">
+          <table className="table table-bordered table-sm table-hover mb-4">
             <thead>
               <tr
                 className={
@@ -20,6 +21,8 @@ const UserOrders = ({ orders }) => {
                 <th scope="col">Service Name</th>
                 <th scope="col">Location</th>
                 <th scope="col">Radius</th>
+                <th scope="col">Service Date</th>
+                <th scope="col">Service Time</th>
                 <th scope="col">Price to pay</th>
               </tr>
             </thead>
@@ -29,7 +32,11 @@ const UserOrders = ({ orders }) => {
                   <td>{el.serviceName}</td>
                   <td>{el.location}</td>
                   <td>{el.radius} Km</td>
-                  <td>₹ {el.price}</td>
+                  <td>{el.date}</td>
+                  <td>{el.time}</td>
+                  <td>
+                    ₹ {el.priceAfterDiscount ? el.priceAfterDiscount : el.price}
+                  </td>
                 </tr>
               ))}
             </tbody>

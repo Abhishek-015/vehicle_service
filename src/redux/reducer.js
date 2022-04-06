@@ -6,7 +6,8 @@ import {
   FILTER_SERVICES_BY_LOCATION,
   SERVICE_VIEW,
   USER_CART,
-  USER_ORDERS
+  USER_ORDERS,
+  GET_CART
 } from "./actionTypes";
 
 let initialState = {
@@ -37,6 +38,8 @@ export const reducer = (state = initialState, { type, payload }) => {
       return { ...state, userCart: payload };
     case USER_ORDERS:
       return { ...state, userOrders: payload };
+    case GET_CART:
+      return { ...state, userCart: [...state.userCart] };
     default:
       return state;
   }

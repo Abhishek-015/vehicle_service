@@ -6,3 +6,4 @@ export const SERVICE_VIEW = "SERVICE_VIEW";
 export const FILTER_SERVICES_BY_LOCATION = "FILTER_SERVICES_BY_LOCATION";
 export const USER_CART = "USER_CART";
 export const USER_ORDERS = "USER_ORDERS";
+export const GET_CART = "GET_CART";

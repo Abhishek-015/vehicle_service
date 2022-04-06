@@ -94,6 +94,7 @@
   ],
   "user-orders": [
     {
+      "totalPrice": "1341.12",
       "userOrders": [
         {
           "serviceName": "hdjsahj dasjkdhkja",
@@ -106,18 +107,40 @@
           "discount": "10",
           "price": "711",
           "ObjectId": "053df8fb-0d2b-41fb-9441-8a40a3a7ca58",
-          "id": 4
+          "id": 4,
+          "date": "2022-04-15",
+          "time": "11:27",
+          "promoCodeApplied": "10DISC",
+          "priceAfterDiscount": "639.90"
+        },
+        {
+          "serviceName": "R V services",
+          "radius": "258",
+          "rating": "4",
+          "desc": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+          "price": "899",
+          "discount": "22",
+          "ImageUrl": "https://media.istockphoto.com/photos/vehicle-service-maintenance-handsome-mens-checking-under-car-on-in-picture-id1207296973?k=20&m=1207296973&s=612x612&w=0&h=1_TGUEAc0bZaDYUepuWethfDoacCseE3EA96xAOYXBQ=",
+          "location": "Banglore",
+          "onlinePayment": "No",
+          "ObjectId": "b3de7fbc-e3fc-466a-a497-92446c08c111",
+          "id": 5,
+          "promoCodeApplied": "22DISC",
+          "date": "2022-04-29",
+          "time": "12:26",
+          "priceAfterDiscount": "701.22"
         }
       ],
       "userEmail": "abhishekvehicleservice@gmail.com",
-      "orderOn": "2022-04-05T18:06:50.230Z",
-      "date": "4/5/2022",
-      "time": "11:36:50 PM",
-      "OrderId": "1ecdde45-d3d2-4c8e-a72f-841a66eb1202",
+      "orderOn": "2022-04-06T19:53:25.035Z",
+      "date": "4/7/2022",
+      "time": "1:23:25 AM",
+      "OrderId": "357830fd-57d2-420f-887f-427bcc802dae",
       "paymentMode": "Cash On Service",
       "id": 1
     },
     {
+      "totalPrice": "539.10",
       "userOrders": [
         {
           "serviceName": "Ajay Car services ",
@@ -130,14 +153,18 @@
           "location": "Banglore",
           "onlinePayment": "No",
           "ObjectId": "83763ae7-07a6-47b9-af3b-65ca8fb68406",
-          "id": 7
+          "id": 7,
+          "date": "2022-04-08",
+          "time": "04:29",
+          "promoCodeApplied": "10DISC",
+          "priceAfterDiscount": "539.10"
         }
       ],
       "userEmail": "abhishekvehicleservice@gmail.com",
-      "orderOn": "2022-04-05T18:07:33.928Z",
-      "date": "4/5/2022",
-      "time": "11:37:33 PM",
-      "OrderId": "a385078a-76b9-4fd1-8442-20034303239c",
+      "orderOn": "2022-04-06T19:56:46.555Z",
+      "date": "4/7/2022",
+      "time": "1:26:46 AM",
+      "OrderId": "2525bd59-0ea3-476a-93e5-14c45debe7da",
       "paymentMode": "Cash On Service",
       "id": 2
     }

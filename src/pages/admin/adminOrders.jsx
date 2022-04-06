@@ -40,7 +40,7 @@ const AdminOrders = () => {
             </h5>
           ) : (
             <>
-              <h5>Your Orders</h5>
+              <h5>Your Order History</h5>
               <UserOrders orders={orders} />
             </>
           )}
