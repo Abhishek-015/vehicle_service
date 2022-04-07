@@ -71,7 +71,6 @@ const ServiceCard = ({ service, handleServiceDelete, handleServiceEdit }) => {
           </button>
         </div>
       )}
-      <hr />
       <div className="card-body text-center m-0 pt-0 ">
         <Tooltip
           title={

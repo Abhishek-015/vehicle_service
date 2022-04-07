@@ -21,6 +21,7 @@ import { getServices } from "./utils/serviceRoute";
 import { addServiceData } from "./redux/action";
 import ServiceView from "./pages/serviceView";
 import AdminOrders from "./pages/admin/adminOrders";
+import Payment from "./pages/payment";
 
 function App() {
   // const services = useSelector((state) => state.serviceData);
@@ -74,6 +75,7 @@ function App() {
           <Route path="/admin/coupon" element={<CreateCoupon />}></Route>
           <Route path="/service/:id" element={<ServiceView />}></Route>
           <Route path="/admin/adminOrders" element={<AdminOrders />}></Route>
+          <Route path="/payment" element={<Payment />}></Route>
         </Routes>
       </div>
     </>

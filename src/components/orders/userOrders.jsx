@@ -8,8 +8,19 @@ const UserOrders = ({ orders }) => {
           <div className="table-secondary p-1 text-secondary">
             OrderId : {order.OrderId} / Order-Date : {order.date} / Order-Time :{" "}
             {order.time} / PaymentMode :{" "}
-            <span className="text-danger">{order.paymentMode}</span>{" "}/
-            <span>Total : <b className="text-danger">₹ {order.totalPrice}</b></span>
+            <span
+              className={
+                order.paymentMode === "Cash On Service"
+                  ? "text-danger"
+                  : "text-success"
+              }
+            >
+              {order.paymentMode}
+            </span>{" "}
+            /
+            <span>
+              Total : <b className="text-danger">₹ {order.totalPrice}</b>
+            </span>
           </div>
           <table className="table table-bordered table-sm table-hover mb-4">
             <thead>
@@ -23,7 +34,11 @@ const UserOrders = ({ orders }) => {
                 <th scope="col">Radius</th>
                 <th scope="col">Service Date</th>
                 <th scope="col">Service Time</th>
-                <th scope="col">Price to pay</th>
+                {order.paymentMode === "Cash On Service" ? (
+                  <th scope="col">Price to pay</th>
+                ) : (
+                  <th scope="col">Price Paid</th>
+                )}
               </tr>
             </thead>
             <tbody>

@@ -134,6 +134,61 @@ const Cart = () => {
     }
   };
 
+  const handleOnlineOrders = () => {
+      //filter online payment services if any
+      for (let item of cart) {
+        if (item.onlinePayment === "No") {
+          toast.error(
+            "Please remove services without online payment availiability "
+          );
+          return;
+        } else if (!item.time || !item.date) {
+          toast.error("Time and Date must be scheduled for each service");
+          return;
+        }
+      }
+
+      const getTotal = () => {
+        return [...cart].reduce((currentValue, nextValue) => {
+          return (
+            currentValue +
+            Number(
+              nextValue.priceAfterDiscount
+                ? nextValue.priceAfterDiscount
+                : nextValue.price
+            )
+          );
+        }, 0);
+      };
+  
+      //creating user orders
+      const userOrders = {
+        totalPrice: getTotal().toFixed(2),
+        userOrders: cart,
+        userEmail: user.email,
+        orderOn: new Date(),
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        OrderId: uuidv4(),
+        paymentMode: "CARD(online)",
+      };
+      // console.log("cart", JSON.stringify(userOrders, null, 4));
+  
+      //save orders to redux store
+      dispatch({
+        type: USER_ORDERS,
+        payload: userOrders,
+      });
+
+      //save userOrders to local storage
+      localStorage.setItem("userOrders",JSON.stringify(userOrders))
+
+        // navigate to payment Page
+    if (user && user.token) {
+      navigate("/payment");
+    } 
+  }
+
   const handleRemove = (serviceId) => {
     const filterServices = [...cart].filter(
       (service) => service.id !== serviceId
@@ -239,7 +294,7 @@ const Cart = () => {
           {user ? (
             <>
               <button
-                // onClick={saveOrderToDb}
+                onClick={handleOnlineOrders}
                 className="btn btn-sm btn-primary mt-2 "
                 style={{ border: "none", marginBottom: "10" }}
                 disabled={!cart.length}
