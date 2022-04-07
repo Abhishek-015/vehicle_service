@@ -5,5 +5,5 @@ export const createOrder = async (paylaod) =>
 
 export const getOrders = async (emailId) =>
   await axios.get(
-    `${process.env.REACT_APP_API_USER_ORDERS}?_sort=orderOn,${emailId}&_order=desc`
+    `${process.env.REACT_APP_API_USER_ORDERS}?_sort=orderOn&userEmail=${emailId}&_order=desc`
   );

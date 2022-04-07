@@ -1,13 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import StarRatings from "react-star-ratings";
 import { useSelector } from "react-redux";
 import { Tooltip } from "antd";
+import { toast } from "react-toastify";
 
 const ServiceCard = ({ service, handleServiceDelete, handleServiceEdit }) => {
   const user = useSelector((state) => state.userDetails);
   const searchQuery = useSelector((state) => state.searchQuery);
+  const navigate = useNavigate()
+  const handleService = (serviceId) => {
+    if(searchQuery===""){
+      toast.error("Please enter the location first and you will automatically taken to all related services wrt selected location")
+      return
+    }
+      navigate(`/service/${serviceId}`)
+  }
   return (
     <div className="card mb-3" style={{ width: "18rem" }}>
       <img
@@ -79,19 +88,17 @@ const ServiceCard = ({ service, handleServiceDelete, handleServiceEdit }) => {
               : "Click to View Service"
           }
         >
-          <Link
-            to={`/service/${service.id}`}
-            className={
-              searchQuery === ""
-                ? "btn btn-primary disabled"
-                : "btn btn-primary"
-            }
+          <button
+            // to={`/service/${service.id}`}
+            className= "btn btn-primary mt-3"
+            onClick={()=>handleService(service.id)}
+            
           >
-            <span>
+            <span >
               <EyeOutlined className="mx-1 text-warning" />
               View service
             </span>
-          </Link>
+          </button>
         </Tooltip>
       </div>
     </div>

@@ -22,6 +22,8 @@ import { addServiceData } from "./redux/action";
 import ServiceView from "./pages/serviceView";
 import AdminOrders from "./pages/admin/adminOrders";
 import Payment from "./pages/payment";
+import UserDashboard from "./pages/user/dashboard";
+import UserOrder from "./pages/user/userOrders";
 
 function App() {
   // const services = useSelector((state) => state.serviceData);
@@ -76,6 +78,8 @@ function App() {
           <Route path="/service/:id" element={<ServiceView />}></Route>
           <Route path="/admin/adminOrders" element={<AdminOrders />}></Route>
           <Route path="/payment" element={<Payment />}></Route>
+          <Route path="/user/dashboard" element={<UserDashboard />}></Route>
+          <Route path="/user/orders" element={<UserOrder />}></Route>
         </Routes>
       </div>
     </>

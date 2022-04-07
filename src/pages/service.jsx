@@ -12,7 +12,10 @@ import { getServices } from "../utils/serviceRoute";
 import ServiceCard from "../components/cards/serviceCard";
 import { useDispatch, useSelector } from "react-redux";
 import ServicePageLocationSelect from "../components/forms/servicePageLocationSelect";
-import { FILTER_SERVICES_BY_LOCATION, SEARCH_QUERY } from "../redux/actionTypes";
+import {
+  FILTER_SERVICES_BY_LOCATION,
+  SEARCH_QUERY,
+} from "../redux/actionTypes";
 const { SubMenu } = Menu;
 
 const Services = () => {
@@ -31,7 +34,7 @@ const Services = () => {
 
   useEffect(() => {
     getAllServices();
-    localStorage.setItem("searchQuery",searchQuery)
+    localStorage.setItem("searchQuery", searchQuery);
   }, [searchQuery]);
 
   const getAllServices = () => {
@@ -239,7 +242,7 @@ const Services = () => {
     <div container-fluid>
       <div className="row">
         <div className="col-md-3">
-          <h4 className="m-3">Filters</h4>
+          <h4 className="m-2 text-secondary">Filters</h4>
           <hr />
           <Menu defaultOpenKeys={["1", "2", "3", "4", "5"]} mode="inline">
             {/* for Radius */}
@@ -354,13 +357,22 @@ const Services = () => {
           </Menu>
         </div>
         <div className="col-md-9">
-          <h4 className="m-2">All Services</h4>
+          {searchQuery !== "" ? (
+            <h5 className="m-2 text-secondary">
+              All Services related to location "{searchQuery}"
+            </h5>
+          ) : (
+            <h5 className="m-2 text-secondary">
+              Our All Services
+            </h5>
+          )}
+
           <div className="container my-3">
             <ServicePageLocationSelect />
           </div>
           <div className="row">
             {services.length === 0 ? (
-              <h5>No service available</h5>
+              <h6 className="text-center m-auto table-secondary py-2 px-4">No service available</h6>
             ) : (
               services.map((service) => (
                 <div className="col-md-4" key={service.ObjectId}>

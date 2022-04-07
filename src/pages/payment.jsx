@@ -73,31 +73,32 @@ const Payment = () => {
       type: USER_ORDERS,
       payload: [],
     });
+
     //empty userOrder from local storage
     localStorage.removeItem("userOrders");
+
     //empty cart from redux store
     dispatch({
       type: USER_CART,
       payload: [],
     });
+
     //empty cart from localstoarge
     localStorage.removeItem("userCart");
+
+    //empty searchQuery from localstoarge
+    localStorage.removeItem("searchQuery");
+
     //navigate to user order page
     if (user && user.token && user.role === "admin") {
       navigate("/admin/adminOrders");
     } else {
-      navigate("/user/history");
+      navigate("/user/orders");
     }
   };
 
-  function confirm(e) {
-    console.log(e);
-    message.success("Click on Yes");
-  }
-
   function cancel(e) {
-    console.log(e);
-    message.error("Click on No");
+    // message.error("");
   }
 
   return (

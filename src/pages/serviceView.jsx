@@ -92,7 +92,7 @@ const ServiceView = () => {
           </div>
         </div>
         <div className="col-md-4">
-          <h4>Service details</h4>
+          <h4 className="text-secondary">Service details</h4>
           <hr />
           <p>
             Service Charge :{" "}

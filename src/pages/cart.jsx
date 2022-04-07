@@ -116,6 +116,9 @@ const Cart = () => {
     //empty userCart from localstorage
     localStorage.removeItem("userCart");
 
+    //empty searchQuery from localstorage
+    localStorage.removeItem("searchQuery");
+
     // empty usercart from redux store
     dispatch({
       type: USER_CART,
@@ -130,7 +133,7 @@ const Cart = () => {
     if (user && user.token && user.role === "admin") {
       navigate("/admin/adminOrders");
     } else {
-      navigate("/dashboard/orders");
+      navigate("/user/orders");
     }
   };
 
@@ -248,7 +251,7 @@ const Cart = () => {
     <div className="container-fluid pt-2">
       <div className="row">
         <div className="col-md-8">
-          <h4>Cart / {cart.length} Services</h4>
+          <h4 className="text-secondary">Cart / {cart.length} Services</h4>
           {!cart.length ? (
             <p>
               {" "}
@@ -260,7 +263,7 @@ const Cart = () => {
           )}
         </div>
         <div className="col-md-4">
-          <h4>Order Summary</h4>
+          <h4 className=" text-secondary">Order Summary</h4>
           <hr />
           {cart.map((service, ind) => (
             <div key={ind}>
@@ -313,7 +316,7 @@ const Cart = () => {
             </>
           ) : (
             <button
-              className="btn btn-sm btn-primary mt-1 "
+              className="btn btn-sm btn-primary mt-1"
               style={{ border: "none" }}
             >
               <Link
@@ -321,6 +324,7 @@ const Cart = () => {
                   pathname: "/login",
                   state: { from: "cart" },
                 }}
+                className="text-white"
               >
                 Login to Checkout
               </Link>

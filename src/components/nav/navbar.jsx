@@ -14,7 +14,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 
-import { LOGOUT } from "../../redux/actionTypes";
+import { LOGOUT, USER_CART } from "../../redux/actionTypes";
 
 const Navbar = () => {
   const user = useSelector((state) => state.userDetails);
@@ -29,6 +29,18 @@ const Navbar = () => {
       type: LOGOUT,
       payload: null,
     });
+    
+    //empty userCart from reduxStore
+    dispatch({
+      type:USER_CART,
+      payload:[]
+    })
+    //removing userCart from localStorage
+    localStorage.removeItem("userCart")
+    
+    //removing serachQuery from localStorage
+     localStorage.removeItem("searchQuery")
+
     navigate("/");
   };
 
