@@ -294,7 +294,7 @@ const Cart = () => {
           <hr />
           Total Payable : <b>₹{getTotal().toFixed(2)}</b>
           <hr />
-          {user ? (
+          {user&&user.token ? (
             <>
               <button
                 onClick={handleOnlineOrders}
