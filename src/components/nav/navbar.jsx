@@ -15,6 +15,7 @@ import {
 } from "@ant-design/icons";
 
 import { LOGOUT, USER_CART } from "../../redux/actionTypes";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const user = useSelector((state) => state.userDetails);
@@ -41,6 +42,7 @@ const Navbar = () => {
     //removing serachQuery from localStorage
      localStorage.removeItem("searchQuery")
 
+     toast.success("You are successfully logged out.")
     navigate("/");
   };
 

@@ -5,6 +5,7 @@ import { LOGGED_IN_USER } from "../../redux/actionTypes";
 import "./signin.css";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import { toast } from "react-toastify";
 
 export const SignIn = () => {
   const [show, setShow] = useState(true);
@@ -38,6 +39,8 @@ export const SignIn = () => {
           type: LOGGED_IN_USER,
           payload,
         });
+
+        toast.success("You are loggedIn successfully.")
         navigate("/");
       })
       .catch((err) => {
