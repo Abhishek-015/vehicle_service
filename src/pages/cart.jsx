@@ -32,7 +32,6 @@ const Cart = () => {
 
   const handleDateTimePromo = (e) => {
     setDateTimePromo({ ...dateTimePromo, [e.target.name]: e.target.value });
-    console.log(dateTimePromo);
   };
 
   const handleSave = (e) => {

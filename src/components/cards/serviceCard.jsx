@@ -37,7 +37,7 @@ const ServiceCard = ({ service, handleServiceDelete, handleServiceEdit }) => {
           ({service.rating})
         </span>
         <br />
-        <p className="card-text mt-1 ">{(service.desc).substr(0,60)}....</p>
+        <p className="card-text mt-1 text-secondary ">{(service.address).substr(0,60)}...</p>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <p className="card-text ">
             Service Charge :{" "}

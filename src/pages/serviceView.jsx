@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams,Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "react-toastify";
 import RelatedServices from "../components/serviceView/relatedServices";
@@ -24,10 +24,8 @@ const ServiceView = () => {
   }, [id]);
 
   const handleService = (serviceToUserCart) => {
-
     //checking id userCart already exist
     if (localStorage.getItem("userCart")) {
-        
       const userCart = JSON.parse(localStorage.getItem("userCart"));
       for (let el of userCart) {
         // checking if service already exist then notify user else add service to local storage
@@ -48,7 +46,6 @@ const ServiceView = () => {
       //store data to local storage
       localStorage.setItem("userCart", JSON.stringify(newCart));
       toast.success("service added to cart");
-
     } else if (!localStorage.getItem("userCart")) {
       const serviceArray = [serviceToUserCart];
 
@@ -87,8 +84,12 @@ const ServiceView = () => {
                   ({serviceView.rating})
                 </span>
               </div>
-              
-              <p className="card-text">{serviceView.address}</p>
+
+              <p className="card-text text-secondary">
+                {" "}
+                <span className="underline">Address</span> :{" "}
+                {serviceView.address}
+              </p>
               <p className="card-text">{serviceView.desc}</p>
             </div>
           </div>
@@ -109,6 +110,13 @@ const ServiceView = () => {
             <span className="text-danger">{serviceView.radius} km</span>
           </p>
           <p>
+            <span className="underline"> Address </span>
+
+            <span className="text-secondary text-sm">
+              :{serviceView.address}
+            </span>
+          </p>
+          <p>
             Location :{" "}
             <span className="text-danger">{serviceView.location}</span>
           </p>
@@ -118,21 +126,20 @@ const ServiceView = () => {
           </p>
           <hr />
           <div className="flex">
-
-          <button
-            className="btn btn-primary btn-sm m-1"
-            onClick={() => handleService(serviceView)}
-          >
-            Add service to Cart
-          </button>
-          <button
-            className="btn btn-primary btn-sm m-1"
-            // onClick={() => handleService(serviceView)}
-          >
-            <Link to="/cart" className="text-white">
-            Go to Cart
-            </Link>
-          </button>
+            <button
+              className="btn btn-primary btn-sm m-1"
+              onClick={() => handleService(serviceView)}
+            >
+              Add service to Cart
+            </button>
+            <button
+              className="btn btn-primary btn-sm m-1"
+              // onClick={() => handleService(serviceView)}
+            >
+              <Link to="/cart" className="text-white">
+                Go to Cart
+              </Link>
+            </button>
           </div>
         </div>
       </div>

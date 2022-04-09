@@ -33,7 +33,6 @@ const AdminOrders = () => {
   const handlePostponedService = (e) => {
     const { name, value } = e.target;
     setPostponeDateTime({ ...postponeDateTime, [name]: value });
-    console.log(postponeDateTime);
   };
 
   const handleSavePostponed = (e, orderId) => {
