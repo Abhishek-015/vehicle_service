@@ -87,6 +87,8 @@ const ServiceView = () => {
                   ({serviceView.rating})
                 </span>
               </div>
+              
+              <p className="card-text">{serviceView.address}</p>
               <p className="card-text">{serviceView.desc}</p>
             </div>
           </div>

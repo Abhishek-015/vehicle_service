@@ -24,6 +24,7 @@ const initialData = {
   ImageUrl: "",
   location: "",
   onlinePayment: "",
+  address:""
 };
 
 const CreateServiceForm = () => {
@@ -91,6 +92,19 @@ const CreateServiceForm = () => {
           id="exampleFormControlInput1"
           placeholder="Radius"
           value={initial.radius}
+          required
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label>Address</label>
+        <input
+          name="address"
+          type="text"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="address"
+          value={initial.address}
           required
           onChange={handleChange}
         />
