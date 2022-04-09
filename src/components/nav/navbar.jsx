@@ -30,19 +30,19 @@ const Navbar = () => {
       type: LOGOUT,
       payload: null,
     });
-    
+
     //empty userCart from reduxStore
     dispatch({
-      type:USER_CART,
-      payload:[]
-    })
+      type: USER_CART,
+      payload: [],
+    });
     //removing userCart from localStorage
-    localStorage.removeItem("userCart")
-    
-    //removing serachQuery from localStorage
-     localStorage.removeItem("searchQuery")
+    localStorage.removeItem("userCart");
 
-     toast.success("You are successfully logged out.")
+    //removing serachQuery from localStorage
+    localStorage.removeItem("searchQuery");
+
+    toast.success("You are successfully logged out.");
     navigate("/");
   };
 
@@ -87,10 +87,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item pt-1">
-            <Badge
-              count={userCart.length}
-              size={"small"}
-            >
+            <Badge count={userCart.length} size={"small"}>
               <Link className="nav-link" to="/cart">
                 <span>
                   <ShoppingCartOutlined className="text-warning p-1" />
@@ -121,7 +118,7 @@ const Navbar = () => {
                 ) : (
                   <Link className="nav-link" to="/user/dashboard">
                     <SettingOutlined className="text-warning p-1" />
-                    User Dashboard
+                    Hello!! {user &&user.token&& user.name}
                   </Link>
                 )
               ) : null}

@@ -14,17 +14,21 @@ const AdminOrders = () => {
     date: "",
     time: "",
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-      getUserOrders();
+    getUserOrders();
   }, []);
 
   const getUserOrders = () => {
+    setLoading(true);
     getOrders(user.email)
       .then((res) => {
         setOrders(res.data);
+        setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
         toast.error("Server Error");
       });
@@ -55,17 +59,16 @@ const AdminOrders = () => {
       .then((res) =>
         getOrders()
           .then((res) => {
-            const timeout = setTimeout(()=>{
-
+            const timeout = setTimeout(() => {
               setOrders(res.data);
-            },2000)
-            clearTimeout(timeout)
+            }, 2000);
+            clearTimeout(timeout);
           })
           .catch((err) => toast.error("server response error"))
       )
       .catch((err) => toast.error("server error"));
 
-      toast.success(`Service has been postponed successfully`)
+    toast.success(`Service has been postponed successfully`);
 
     setEditId(null);
   };
@@ -96,7 +99,9 @@ const AdminOrders = () => {
     setEditId(serviceId);
   };
 
-  return (
+  return loading ? (
+    <h4 className="text-danger">Loading...</h4>
+  ) : (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-2">
