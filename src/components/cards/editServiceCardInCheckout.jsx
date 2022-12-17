@@ -23,6 +23,7 @@ const EditCartService = ({
           <input
             name="date"
             type="date"
+            min={new Date().toLocaleDateString('en-ca')}
             value={service.date&&service.date}
             className="form-control"
             onChange={handleDateTimePromo}

@@ -153,11 +153,11 @@ const Payment = () => {
             <input
               type="date"
               name="expiry"
+              min={new Date().toLocaleDateString('en-ca')}
               placeholder="Card Expiry"
               className="form-control m-2"
               onChange={handleInputChange}
               onFocus={handleInputFocus}
-              min={31 - 12 - 2022}
               required
             />
             <input

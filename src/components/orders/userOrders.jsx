@@ -73,6 +73,7 @@ const UserOrders = ({
                       <td>
                         <input
                           type="date"
+                          min={new Date().toLocaleDateString('en-ca')}
                           value={
                             postponeDateTime.date !== ""
                               ? postponeDateTime.date
